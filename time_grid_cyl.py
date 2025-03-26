@@ -8,4 +8,3 @@ delta = t0 - tf
 h = 0.001
 N = int((tf - t0) / h)
 t = np.linspace(t0,tf,N)
-

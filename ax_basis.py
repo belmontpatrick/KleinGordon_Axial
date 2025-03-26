@@ -55,3 +55,8 @@ def ddSBr(n,r):
 #         for i in range(PR + 1)
 #         for j in range(PZ + 1)
 #            ]
+
+def SB(n, r, z):
+    list = [SBr(2 * i, r) * SBz(2 * j, z)
+            for i in range(PR + 1) for j in range(PZ + 1)]
+    return list[n]

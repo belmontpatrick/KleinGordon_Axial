@@ -6,6 +6,9 @@ import ax_basis as bs
 import scipy.special as sp
 from scipy.optimize import fsolve
 
+np.set_printoptions(precision=16)
+np.set_printoptions(legacy='1.25')
+
 LR = par.LR
 PR = par.PR
 PX = par.PX
@@ -25,6 +28,7 @@ ddSBr = bs.ddSBr
 SBz = bs.SBz
 dSBz = bs.dSBz
 ddSBz = bs.ddSBz
+SB = bs.SB
 # N = 60                                                   # Truncation ordem
                                           # Map parameter 
 
@@ -80,7 +84,7 @@ for i in range(PZ+1):
 for i in range(PZ+1):
   zzSB[i,] = ddSBz(i,z)                     
 
-### Base Matrix (Tchebyshev Polinomials) in r: 
+# ### Base Matrix (Tchebyshev Polinomials) in r: 
 
 SB_r = np.zeros([PR+1,PR+1])
 rSB = np.zeros([PR+1,PR+1])
@@ -118,7 +122,34 @@ drrSB_cyl = np.tile(SB_z,(PR+1,PR+1)) * repelem(rrSB,(PZ+1,PZ+1))
 
 SB_cyl_inv = np.linalg.inv(SB_cyl)
 
-# print(SB_cyl.shape)
+
+SBphi =  [[SBr(2 * i, r[k]) * SBz(2 * j, z[n])
+            for i in range(PR + 1)
+            for j in range(PZ + 1)]
+           for k in range(PR + 1)
+           for n in range(PZ + 1)]
+
+SBphi_inv = np.linalg.inv(SBphi)
+
+print(SBphi)
+
+drSBphi =   [[dSBr(2 * i, r[k]) * SBz(2 * j, z[n])
+            for i in range(PR + 1)
+            for j in range(PZ + 1)]
+           for k in range(PR + 1)
+           for n in range(PZ + 1)]
+
+drrSBphi =   [[ddSBr(2 * i, r[k]) * SBz(2 * j, z[n])
+            for i in range(PR + 1)
+            for j in range(PZ + 1)]
+           for k in range(PR + 1)
+           for n in range(PZ + 1)]
+
+dzzSBphi =   [[SBr(2 * i, r[k]) * ddSBz(2 * j, z[n])
+            for i in range(PR + 1)
+            for j in range(PZ + 1)]
+           for k in range(PR + 1)
+           for n in range(PZ + 1)]
 
 ### Spherical Basis
 

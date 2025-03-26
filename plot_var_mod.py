@@ -13,43 +13,48 @@ ddSBz = bs.ddSBz
 repelem = rep.repelem
 PR = par.PR
 PZ = par.PZ
+SB = bs.SB
 
 M = 100
 
 rplot = np.linspace(0.000001,10,M)
 zplot = np.linspace(0.000001,10,M)
 
-Rplot, Zplot = np.meshgrid(rplot, zplot, indexing = 'ij') 
+SBphi_plot =  [[SBr(2 * i, rplot[k]) * SBz(2 * j, zplot[n])
+            for i in range(PR + 1)
+            for j in range(PZ + 1)]
+           for k in range(PR + 1)
+           for n in range(PZ + 1)]
 
-SBz_plot = np.zeros([M,M])   ###PZ + 1, M
-SBr_plot = np.zeros([M,M])   ###PR + 1, M
-dSBz_plot = np.zeros([M,M])
-dSBr_plot = np.zeros([M,M])
-ddSBz_plot = np.zeros([M,M])
-ddSBr_plot = np.zeros([M,M])
+# Rplot, Zplot = np.meshgrid(rplot, zplot, indexing = 'ij') 
 
-for i in range(M):
-  SBr_plot[i,] = SBr(i,rplot) 
+# SBz_plot = np.zeros([PZ+1,M])   ###PZ + 1, M
+# SBr_plot = np.zeros([PR+1,M])   ###PR + 1, M
+# dSBz_plot = np.zeros([PZ+1,M])
+# dSBr_plot = np.zeros([PR+1,M])
+# ddSBz_plot = np.zeros([PZ+1,M])
+# ddSBr_plot = np.zeros([PR+1,M])
 
-for i in range(M):
-  SBz_plot[i,] = SBr(i,zplot)
+# for i in range(PR+1):
+#   SBr_plot[i,] = SBr(i,rplot) 
 
-for i in range(M):
-  dSBr_plot[i,] = dSBr(i,rplot) 
+# for i in range(PZ+1):
+#   SBz_plot[i,] = SBr(i,zplot)
 
-for i in range(M):
-  ddSBr_plot[i,] = SBr(i,zplot) 
+# for i in range(PR+1):
+#   dSBr_plot[i,] = dSBr(i,rplot) 
 
-for i in range(M):
-  dSBz_plot[i,] = SBr(i,zplot)
+# for i in range(PR+1):
+#   ddSBr_plot[i,] = SBr(i,zplot) 
 
-for i in range(M):
-  ddSBz_plot[i,] = SBr(i,zplot)
+# for i in range(PZ+1):
+#   dSBz_plot[i,] = SBr(i,zplot)
 
-# psirplot = SBr_plot[]
+# for i in range(PZ+1):
+#   ddSBz_plot[i,] = SBr(i,zplot)
 
-SB_cyl_plot = np.tile(SBz_plot,(M,M)) * repelem(SBr_plot,(M,M))
+# # psirplot = SBr_plot[]
 
-SB_cyl_inv_plot = np.linalg.inv(SB_cyl_plot)
+# SB_cyl_plot = np.tile(SBz_plot,(PR+1,M)) * repelem(SBr_plot,(PZ+1,M))
 
-# print(SB_cyl_plot.shape)
+# SB_cyl_inv_plot = np.linalg.inv(SB_cyl_plot)
